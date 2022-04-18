@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+    environment {
+        myVar = "Outer Block"
+    }
+    stages {
+        stage('checkout'){
+            steps {
+                  git branch: 'MAIN', credentialsId: 'TOKEN1-GIT', url: 'https://github.com/rritsoft/LINUX-SSSH-TOKEN-TST.git'
+                  
+            }
+        
+        }
+        stage('build'){
+            steps{
+                echo "sh array.sh"
+            }
+        }
+        stage('post tasls'){
+            steps{
+                echo "echo emailinmg"
+            }
+        }
+    
+    
+        stage('Printing Environment var '){
+            environment {
+                myVar = "INNER BLOCK"
+            }
+            steps{
+                echo 'echo "THIS IS ANOTHER VARIABLE BLOCK: $myVar"'
+            }
+        }
+          
+    }
+}
